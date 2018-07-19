@@ -7,10 +7,11 @@
 <body>
 	<h1>js语法练习</h1>
 	<script>
+
 	window.onload = function(){
 		var moon = 'student women\' sdf ';
-		alert(moon);
 	};
+	//变量的作用域 变量不加声明的话则为全局变量
 	function mutuplying(num1, num2)
 	{
 		var total = num1 * num2;
@@ -18,7 +19,18 @@
 	}
 	var total = 50;
 	mutuplying(20,20);
-	alert(total);
+	//js的对象
+	//1、内建对象
+	var num = 7.561;
+	var num = Math.round(num);
+	console.log(num,"取整");
+	var currentDate = new Date();
+	console.log(currentDate.getDay(),"星期几");
+	console.log(currentDate.getHours(),"当前几点");
+	console.log(currentDate.getMonth() + 1,"当前的月份");
+	//宿主对象 包含 Form Image Element
+	//自定义对象
+
 	</script>
 </body>
 </html>
