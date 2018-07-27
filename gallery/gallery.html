@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>我的图片库</title>
+	<style>
+		ul li 
+		{
+			list-style-type: none;
+		}
+	</style>
+</head>
+<body>
+	<h1>我的图片库</h1>
+	<ul>
+		<li><a href="./psb.jpg" onclick="showPic(this); return false;">花语1</a></li>
+		<li><a href="./psb1.jpg" onclick="showPic(this); return false;">花语2</a></li>
+		<li><a href="./psb2.jpg" onclick="showPic(this); return false;">花语3</a></li>
+		<li><a href="./psb3.jpg" onclick="showPic(this); return false;">花语4</a></li>
+	</ul>
+	<img id="description" src="./gallery.jpg" alt="">
+	<script>
+
+	function showPic(whichpic)
+	{
+		var source = whichpic.getAttribute('href');
+		console.log(source);
+		var description = document.getElementById('description');
+		description.setAttribute('src', source);
+	}
+	</script>
+	<script>
+		// this 获取当前的对象
+		// getAttribute 获取元素的属性 setAttribute 设置当前元素的属性
+		// document.getElementById 通过元素的ID获取对象
+		// document.getElementByClass 
+	</script>
+</body>
+</html>
