@@ -9,31 +9,106 @@
 			list-style-type: none;
 		}
 	</style>
+	<script>
+		// this 获取当前的对象
+		// getAttribute 获取元素的属性 setAttribute 设置当前元素的属性
+		// document.getElementById 通过元素的ID获取对象
+		// document.getElementByClass 通过元素的类名获取对象
+		// document.getElementsByTagName 通过元素的名称直接获取对象
+		// 
+		// 上面这些方法是DOM Core的组成部分 它们并不属于javascript 支持DOM的任何一种语言都可以调用它们
+		// 
+		// HTML-DOM 提供一个forms 对象
+		// document.getElementsByTagName('form')
+		// 可以简化为 document.forms 
+		// 还有src属性
+		// element.getAttribute('src')
+		// 简化为
+		// element.src
+		// 
+		// 把事件处理函数移出文档
+		// 向后兼容
+		// 确保可以访问
+		// 
+		// 结构化程序设计: 函数应该只有一个入口和一个出口
+		// 但是如果原则遵循这种设计，将会导致代码难以维护
+		// 个人认为 在函数有多个出口时，只需将过个出口写在函数的头部就是可以接受
+		// 
+	</script>
 </head>
 <body>
 	<h1>我的图片库</h1>
-	<ul>
-		<li><a href="./psb.jpg" onclick="showPic(this); return false;">花语1</a></li>
-		<li><a href="./psb1.jpg" onclick="showPic(this); return false;">花语2</a></li>
-		<li><a href="./psb2.jpg" onclick="showPic(this); return false;">花语3</a></li>
-		<li><a href="./psb3.jpg" onclick="showPic(this); return false;">花语4</a></li>
+	<ul id="imagegallery">
+		<li><a href="./psb.jpg"  title="花语11" >花语1</a></li>
+		<li><a href="./psb1.jpg" title="花语22" >花语2</a></li>
+		<li><a href="./psb2.jpg" title="花语33" >花语3</a></li>
+		<li><a href="./psb3.jpg" title="花语44" >花语4</a></li>
 	</ul>
-	<img id="description" src="./gallery.jpg" alt="">
+	<p id="description">我的图片库</p>
+	<img id="placeholder" src="./gallery.jpg" alt="">
 	<script>
 
 	function showPic(whichpic)
 	{
 		var source = whichpic.getAttribute('href');
 		console.log(source);
+		var placeholder = document.getElementById('placeholder');
+		placeholder.setAttribute('src', source);
 		var description = document.getElementById('description');
-		description.setAttribute('src', source);
+		var text = whichpic.getAttribute('title')
+		description.firstChild.nodeValue = text;
+	}
+
+	function prepareGallery()
+	{
+		if(!document.getElementsByTagName) return false;
+		if(!document.getElementById) return false;
+		if(!document.getElementById('imagegallery')) return false;
+		var gallery = document.getElementById('imagegallery');
+		var links = gallery.getElementsByTagName('a');
+		for (var i = 0; i < links.length; i++) {
+			links[i].onclick = function (){
+				showPic(this);
+				return false;
+			}
+		}
+
+	}
+	//必须先执行这个prepareGallery这个函数才能进行绑定DOM 也就是说DOM必须是完整
+	//DOM加载完触发的事件是 onload
+	//window.onload = prepareGallery;
+	//window.onload = firstfunction;
+	//window.onload = secondfunction;
+	//如若多个函数需要在DOM加载完成使用上面的行为则函数只会执行最后一个 因此我需要创建一个匿名函数来包含这些函数
+	// window.onload = function() {
+	// 	prepareGallery();
+	// }
+	/**
+	 * 将那些页面加载完毕时执行的函数创建为一个队列
+	 * 
+	 * @param function func  页面加载完所需要执行的函数
+	 * 
+	 */ 
+	function addLoadEvent(func) {
+		var oldonload = window.onload;
+		if (typeof window.onload != 'function') {
+			window.onload = func;
+		} else {
+			window.onload = function() {
+				oldonload();
+				func();
+			}
+		}
+	}
+
+	var oldonload = window.onload;
+	window.onload = prepareGallery;
+	if (typeof window.onload != 'function') {
+		alert(typeof window.onload);
+	} else {
+		alert(typeof window.onload);
 	}
 	</script>
-	<script>
-		// this 获取当前的对象
-		// getAttribute 获取元素的属性 setAttribute 设置当前元素的属性
-		// document.getElementById 通过元素的ID获取对象
-		// document.getElementByClass 
-	</script>
+	
 </body>
 </html>
