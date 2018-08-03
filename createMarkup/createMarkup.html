@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动态创建标记</title>
+	<script>
+		/*
+		 1、传统技术：document.write和document.innerHTML
+		 2、深入剖析DOM方法：createElement、createTextNode、appendChild和insertBefore
+
+		 绝大多数的javaScript函数的工作原理: 网页的结构由标记负责创建,javaScript函数只用来改变某些细节而不改变其底层结构
+		 但： javaScripte也可以通过创建元素和修改现有的元素来改变网页结构
+		 */
+	</script>
+</head>
+<body>
+	<script>
+		//document.write 其最大的缺点就它违背了“行为应该与表现分离”的原则
+		//document.write('<p>This is inserted.</p>');
+		// function insertParagraph(text) {
+		// 	var str = "<p>";
+		// 	str += text;
+		// 	str +="</p>";
+		// 	document.write(str);
+		// }
+		// insertParagraph('This is inserted.');
+		//像上面这样把 JavaScipt和HTML代码混杂在一起时一种很不好的做法，这样标记既不容易阅读和编辑，也无法享受到行为与结构分离开来的好处
+	</script>
+	<!-- innerHTML 这个属性是获取元素里面的值无细节可言 -->
+	<!-- <div id="testdiv">
+		<p>This is <em>my</em> content.</p>
+	</div>
+	<script>
+	window.onload = function() {
+		var testdiv = document.getElementById('testdiv');
+		alert(testdiv.innerHTML);
+	}
+	</script> -->
+
+	<!-- <div id="testdiv">
+	</div>
+	<script>
+		window.onload = function() {
+			var testdiv = document.getElementById('testdiv');
+			var para = document.createElement('p');
+			testdiv.appendChild(para);
+			var txt = document.createTextNode('Hello world');
+			para.appendChild(txt);
+			// var info = 'nodeName:';
+			// info+= para.nodeName;
+			// info+= para.nodeType;
+			// alert(info);
+		}
+	</script> -->
+	<!-- <div id="testdiv">
+	</div>
+	<script>
+		window.onload = function() {
+			var testdiv = document.getElementById('testdiv');
+			var para = document.createElement('p');
+			testdiv.appendChild(para);
+			var txt = document.createTextNode('This is');
+			para.appendChild(txt);
+			var emara = document.createElement('em');
+			para.appendChild(emara);
+			var txt1 = document.createTextNode(' my');
+			emara.appendChild(txt1);
+			var txt2 = document.createTextNode(' content.');
+			para.appendChild(txt2);
+			// var info = 'nodeName:';
+			// info+= para.nodeName;
+			// info+= para.nodeType;
+			// alert(info);
+		}
+	</script> -->
+
+	<script>
+		//动态创建图片库 将行为和结构彻底分开
+		//创建图片标签
+		var placeholder = document.createElement('img');
+		placeholder.setAttribute('id','placeholder');
+		placeholder.setAttribute('src','../gallery/gallery.jpg');
+		placeholder.setAttribute('alt','my image gallery');
+		//创建文字标签
+		var description = document.createElement('p');
+		description.setAttribute('id','description');
+		var desctext = description.createTextNode('Choose and image');
+		description.appendChild(desctext);
+		//document.getElementsByTagName()
+	</script>
+</body>
+</html>
