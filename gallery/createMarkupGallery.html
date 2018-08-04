@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>我的图片库</title>
+	<style>
+		body {
+			color: #333;
+			background-color: #ccc;
+			margin:1em 10%; 
+		}
+		h1 {
+			color: #333;
+			background-color:transparent; 
+		}
+		a {
+			color: #c60;
+			background-color:transparent;
+			font-weight: bold;
+			text-decoration: none; 
+		}
+		ul {
+			padding: 0;
+		}
+		li {
+			float:left;
+			padding: 1em;
+			list-style:none;
+		}
+		img {
+			display: block;
+			clear: both;
+		}
+	</style>
+	<script>
+		// this 获取当前的对象
+		// getAttribute 获取元素的属性 setAttribute 设置当前元素的属性
+		// document.getElementById 通过元素的ID获取对象
+		// document.getElementByClass 通过元素的类名获取对象
+		// document.getElementsByTagName 通过元素的名称直接获取对象
+		// 
+		// 上面这些方法是DOM Core的组成部分 它们并不属于javascript 支持DOM的任何一种语言都可以调用它们
+		// 
+		// HTML-DOM 提供一个forms 对象
+		// document.getElementsByTagName('form')
+		// 可以简化为 document.forms 
+		// 还有src属性
+		// element.getAttribute('src')
+		// 简化为
+		// element.src
+		// 
+		// 把事件处理函数移出文档
+		// 向后兼容
+		// 确保可以访问
+		// 
+		// 结构化程序设计: 函数应该只有一个入口和一个出口
+		// 但是如果原则遵循这种设计，将会导致代码难以维护
+		// 个人认为 在函数有多个出口时，只需将过个出口写在函数的头部就是可以接受
+		// 
+		// 
+		// 动态创建标记
+		// 
+	</script>
+</head>
+<body>
+	<h1>我的图片库</h1>
+	<ul id="imagegallery">
+		<li><a href="./images/gallery1.jpg"  title="花语11" ><img src="./images/gallery1-sub.jpg" alt=""></a></li>
+		<li><a href="./images/gallery2.jpg" title="花语22" ><img src="./images/gallery2-sub.jpg" alt=""></a></li>
+		<li><a href="./images/gallery3.jpg" title="花语33" ><img src="./images/gallery3-sub.jpg" alt=""></a></li>
+		<li><a href="./images/gallery4.jpg" title="花语44" ><img src="./images/gallery4-sub.jpg" alt=""></a></li>
+	</ul>
+	<script>
+
+	function showPic(whichpic) {
+		var source = whichpic.getAttribute('href');
+		console.log(source);
+		var placeholder = document.getElementById('placeholder');
+		placeholder.setAttribute('src', source);
+		var description = document.getElementById('description');
+		var text = whichpic.getAttribute('title')
+		description.firstChild.nodeValue = text;
+	}
+
+	function prepareGallery() {
+		if(!document.getElementsByTagName) return false;
+		if(!document.getElementById) return false;
+		if(!document.getElementById('imagegallery')) return false;
+		var gallery = document.getElementById('imagegallery');
+		var links = gallery.getElementsByTagName('a');
+		for (var i = 0; i < links.length; i++) {
+			links[i].onclick = function (){
+				showPic(this);
+				return false;
+			}
+		}
+
+	}
+	function insertAfter(newElement, targetElement) {
+			
+		var parent = targetElement.parentNode;
+		//检查目标元素是不是parent的最后一个子元素
+		if (parent.lastChild == targetElement) {
+			parent.appendChild(newElement);
+		} else {
+			parent.insertBefore(newElement, targetElement.nextSibling);
+		}
+	}
+	//这个函数用到了以下DOM方法和属性：
+	// parentNode 属性
+	// lastChild 属性
+	// appendChild 方法
+	// insertBefore 方法
+	// nextSibling 属性 -- 获取当前元素同级的下一个元素
+
+
+
+
+
+
+	//必须先执行这个prepareGallery这个函数才能进行绑定DOM 也就是说DOM必须是完整
+	//DOM加载完触发的事件是 onload
+	//window.onload = prepareGallery;
+	//window.onload = firstfunction;
+	//window.onload = secondfunction;
+	//如若多个函数需要在DOM加载完成使用上面的行为则函数只会执行最后一个 因此我需要创建一个匿名函数来包含这些函数
+	// window.onload = function() {
+	// 	prepareGallery();
+	// }
+	/**
+	 * 将那些页面加载完毕时执行的函数创建为一个队列
+	 * 
+	 * @param function func  页面加载完所需要执行的函数
+	 * 
+	 */ 
+	function addLoadEvent(func) {
+		var oldonload = window.onload;
+		if (typeof window.onload != 'function') {
+			window.onload = func;
+		} else {
+			window.onload = function() {
+				oldonload();
+				func();
+			}
+		}
+	}
+
+	// var oldonload = window.onload;
+	// window.onload = prepareGallery;
+	// if (typeof window.onload != 'function') {
+	// 	alert(typeof window.onload);
+	// } else {
+	// 	alert(typeof window.onload);
+	// }
+	</script>
+	<script>
+		//动态创建图片库 将行为和结构彻底分开
+		//创建图片标签
+		function preparePlaceholder() {
+			var placeholder = document.createElement('img');
+			placeholder.setAttribute('id','placeholder');
+			//placeholder.setAttribute('src','../gallery/gallery.jpg');
+			placeholder.setAttribute('src','./images/gallery1.jpg');
+			placeholder.setAttribute('alt','my image gallery');
+			//创建文字标签
+			var description = document.createElement('p');
+			description.setAttribute('id','description');
+			var desctext = document.createTextNode('Choose and image');
+			description.appendChild(desctext);
+			// document.getElementsByTagName('body')[0].appendChild(placeholder);
+			// document.getElementsByTagName('body')[0].appendChild(description);
+			//在已有的元素插入一个新元素
+			 var gallery = document.getElementById('imagegallery');
+			// gallery.parentNode.insertBefore(placeholder, gallery);
+			// gallery.parentNode.insertBefore(description, gallery);
+			// 
+			insertAfter(placeholder, gallery);
+			insertAfter(description, placeholder);
+		}
+		
+		//文档加载完触发该函数
+		addLoadEvent(preparePlaceholder);
+		addLoadEvent(prepareGallery);
+	</script>
+	<script>
+		
+
+	</script>
+</body>
+</html>

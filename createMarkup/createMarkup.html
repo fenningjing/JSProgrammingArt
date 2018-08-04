@@ -73,7 +73,10 @@
 			// alert(info);
 		}
 	</script> -->
-
+	<h1>我的图片库</h1>
+	<ul id="imagegallery">
+		
+	</ul>
 	<script>
 		//动态创建图片库 将行为和结构彻底分开
 		//创建图片标签
@@ -84,9 +87,15 @@
 		//创建文字标签
 		var description = document.createElement('p');
 		description.setAttribute('id','description');
-		var desctext = description.createTextNode('Choose and image');
+		var desctext = document.createTextNode('Choose and image');
 		description.appendChild(desctext);
-		//document.getElementsByTagName()
+		document.getElementsByTagName('body')[0].appendChild(placeholder);
+		document.getElementsByTagName('body')[0].appendChild(description);
+
+		//在已有的元素插入一个新元 素
+		var gallery = document.getElementById('imagegallery');
+		gallery.parentNode.insertBefore(placeholder, gallery);
+		gallery.parentNode.insertBefore(description, gallery);
 	</script>
 </body>
 </html>
