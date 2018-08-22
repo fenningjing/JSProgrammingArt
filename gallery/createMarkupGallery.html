@@ -96,6 +96,12 @@
 		}
 
 	}
+	/**
+	 * insertAfter 在元素后面插入新元素 
+	 * @param  {[type]} newElement    要插入的新元素
+	 * @param  {[type]} targetElement 新元素插入该元素后
+	 * @return {[type]}               [description]
+	 */
 	function insertAfter(newElement, targetElement) {
 			
 		var parent = targetElement.parentNode;
@@ -135,6 +141,7 @@
 	 */ 
 	function addLoadEvent(func) {
 		var oldonload = window.onload;
+		//判断队列中是否有函数了
 		if (typeof window.onload != 'function') {
 			window.onload = func;
 		} else {
