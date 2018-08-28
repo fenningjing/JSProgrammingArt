@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body {
+			font-family: "Arial";
+			font-size: 10pt;	
+		}
+		abbr {
+			text-decoration: none;
+			border: 0;
+			font-style: normal;
+		}
+	</style>
+</head>
+<body>
+
+
+	<script>
+		/*
+			目标
+			1、一个为文档创建"缩略语列表"的函数
+			2、一个为文档创建"文献来源链接"的函数
+			3、一个为文档创建"快捷键清单"的函数
+		 */
+	</script>
+	<h1>What is the Document Object Model?</h1>
+	<p>
+	The <abbr title="World Wide Web Consortium">W3C</abbr>defines the <abbr title="Document Object Model">DOM</abbr> as :
+	</p>
+	<blockquote cite="http://www.w3.org/DOM">
+	<p>
+	A platform and language-neutral interface that will allow programs
+	content, structure and style of documents.
+	</p>
+	</blockquote>
+	<p>
+	It is  an <abbr title="Appication programming Interface">API</abbr>
+	that can be used to navigate <abbr title="HyperText Markup Language">XML</abbr>
+	documents.
+	</p>
+	<script>
+	var abbreviations = document.getElementsByTagName('abbr');
+	var defs = [];
+	for (var i = 0; i < abbreviations.length; i++) {
+		var definition = abbreviations[i].getAttribute('title');
+		var key = abbreviations[i].firstChild.nodeValue;
+		defs[key] = definition;
+	}
+	var dl = document.createElement('dl');
+	for (i in defs) {
+		var dtitle = document.createElement('dt');
+		var dtitle_text = document.createTextNode(i);
+		dtitle.appendChild(dtitle_text);
+		var ddesc = document.createElement('dd');
+		var ddesc_text = document.createTextNode(defs[i]);
+		ddesc.appendChild(ddesc_text);
+		dl.appendChild(dtitle);
+		dl.appendChild(ddesc);
+	}
+	document.getElementsByTagName('body')[0].appendChild(dl);
+	</script>
+</body>
+</html>
